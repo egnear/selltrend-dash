@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { FiltersBar } from "@/components/FiltersBar";
 import { KpiCard } from "@/components/KpiCard";
@@ -44,12 +45,17 @@ export default function Home() {
 
   return (
     <main className="flex-1 px-4 md:px-8 py-6 max-w-[1400px] w-full mx-auto flex flex-col gap-6">
-      <header className="flex flex-col gap-1">
-        <h1 className="text-2xl md:text-3xl font-bold text-white">🚀 SellTrend Dash</h1>
-        <p className="text-sm text-slate-400">
-          Volume de compras + conteúdo pesquisado no TikTok Shop, Shopee e Mercado Livre, com recomendações de venda e
-          produção de conteúdo em tempo real.
-        </p>
+      <header className="flex flex-wrap items-start justify-between gap-4">
+        <div className="flex flex-col gap-1">
+          <h1 className="text-2xl md:text-3xl font-bold text-white">🚀 SellTrend Dash</h1>
+          <p className="text-sm text-slate-400">
+            Volume de compras + conteúdo pesquisado no TikTok Shop, Shopee e Mercado Livre, com recomendações de venda e
+            produção de conteúdo em tempo real.
+          </p>
+        </div>
+        <Link href="/conexoes" className="rounded-lg border border-fuchsia-400/40 bg-fuchsia-500/10 px-3 py-2 text-sm font-semibold text-fuchsia-200 hover:bg-fuchsia-500/20 transition-colors">
+          Conectar contas →
+        </Link>
       </header>
 
       <FiltersBar

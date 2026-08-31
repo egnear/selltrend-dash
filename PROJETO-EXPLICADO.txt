@@ -1,0 +1,227 @@
+====================================================================
+ SELLTREND DASH — GUIA COMPLETO (explicado de um jeito bem simples)
+====================================================================
+
+Oi! Esse arquivo explica TUDO sobre o seu painel (dashboard), sem
+"economês" e sem termos técnicos difíceis. Leia com calma, é rápido.
+
+
+1) O QUE É ESSE SITE, EM UMA FRASE
+------------------------------------------------------------------
+É um painel (dashboard) que te mostra, em gráficos bonitos, quais
+categorias de produto estão mais "quentes" agora (moda, beleza,
+eletrônicos etc.) e sugere o que você deveria VENDER e que tipo de
+VÍDEO/CONTEÚDO produzir, hora a hora, dia a dia, semana a semana e
+mês a mês.
+
+
+2) COMO ABRIR O SITE
+------------------------------------------------------------------
+1. Abra o terminal na pasta do projeto.
+2. Digite: npm run dev
+3. Abra o navegador em http://localhost:3000
+4. Pronto, o painel carrega sozinho. Não precisa mexer em nada.
+
+Tem um botão "Atualizar agora" no topo — clique nele sempre que quiser
+forçar uma atualização na hora. Do lado dele aparece a hora exata da
+última atualização.
+
+
+3) OS BOTÕES "HORA / DIA / SEMANA / MÊS" — O QUE CADA UM FAZ
+------------------------------------------------------------------
+- HORA  -> mostra as últimas 24 horas, hora a hora. Use isso para saber
+           o que postar/vender NOS PRÓXIMOS MINUTOS.
+- DIA   -> visão do dia de hoje inteiro. Use para planejar as postagens
+           e ofertas de hoje.
+- SEMANA-> últimos 7 dias. Mostra em qual dia da semana cada categoria
+           vende mais (ex: sexta/sábado costuma bombar mais).
+- MÊS   -> últimos 30 dias. Uma visão mais "de longo prazo", boa para
+           decidir em qual nicho/categoria você deveria focar de vez.
+
+Passe o mouse em cima de cada botão que aparece uma dica explicando de
+novo (tooltip).
+
+
+4) O QUE ESTÁ CONECTADO DE VERDADE (DADOS REAIS) — E O QUE NÃO ESTÁ
+------------------------------------------------------------------
+Isso é a parte mais importante deste documento. Vou ser 100% honesto
+com você sobre o que é dado real (ao vivo) e o que é uma ESTIMATIVA.
+
+▶ GOOGLE TRENDS — 100% REAL, AO VIVO, JÁ FUNCIONANDO
+  O painel busca, ao vivo, os assuntos mais pesquisados no Google
+  no Brasil agora (feed público e oficial do Google, sem necessidade
+  de senha ou chave). Isso aparece na seção "Tendências reais do
+  Brasil agora". Se um desses assuntos tiver a ver com uma das suas
+  categorias de produto, ele ganha um selo verde "● ao vivo" na
+  tabela de palavras-chave e o número de "busca" daquela palavra
+  sobe de verdade.
+
+▶ TIKTOK SHOP, SHOPEE E MERCADO LIVRE — AINDA NÃO DÁ PRA CONECTAR
+  SEM VOCÊ FAZER UM CADASTRO (explico o porquê)
+  Isso é importante entender: NENHUMA dessas 3 plataformas permite que
+  um site de fora veja "quanto está vendendo" de terceiros sem
+  autorização. Isso seria basicamente um vazamento de dados de vendas
+  de milhões de lojistas — por isso elas travam isso com um sistema de
+  login oficial chamado OAuth (a mesma tecnologia de "Entrar com o
+  Google/Facebook" que você já deve ter visto por aí).
+
+  Ou seja: só é possível ver os números REAIS DA SUA PRÓPRIA LOJA,
+  e só depois que você mesmo autorizar o aplicativo com login e senha
+  da sua conta de vendedor em cada uma delas. Eu não tenho como fazer
+  esse cadastro por você (precisa ser feito com o CNPJ/CPF e a conta
+  de vendedor de vocês), mas deixei tudo pronto pra quando você
+  configurar, o número troca sozinho de "estimativa" pra "real".
+
+  Enquanto isso não é feito, o painel usa uma ESTIMATIVA. Repito:
+  ESTIMATIVA, não é chute aleatório. Ela é calculada com uma fórmula
+  fixa (a mesma sempre) baseada em:
+    - Um "índice de popularidade" de cada categoria no comércio social
+      brasileiro (esse número vem de relatórios públicos de mercado,
+      tipo "beleza e moda vendem mais no TikTok Shop", "eletrônicos
+      vendem mais no Mercado Livre" etc.)
+    - O horário do dia e o dia da semana (todo mundo sabe que às 20h
+      as pessoas compram/assistem mais do que às 4h da manhã — isso é
+      um padrão real de comportamento, não invenção)
+  Isso está identificado no painel: toda vez que os números vêm dessa
+  estimativa, tem uma etiqueta amarela "🟡 Aguardando credenciais" na
+  seção "Conexões com APIs externas", avisando claramente.
+
+
+5) A SEÇÃO "CONEXÕES COM APIS EXTERNAS" — SEU PAINEL DE CONTROLE
+------------------------------------------------------------------
+Logo abaixo dos filtros tem uma seção com 4 cartões, um pra cada fonte
+de dado externa. Cada cartão mostra:
+  - 🟢 Ao vivo         = dado real, funcionando agora
+  - 🟡 Aguardando       = precisa você conectar (tem um botão
+       credenciais       "Configurar →" que leva direto pro site
+                          oficial de cada plataforma)
+  - 🔴 Indisponível     = a fonte real falhou momentaneamente
+                          (ex: Google fora do ar). Isso é raro.
+
+
+6) COMO ATIVAR CADA API DE VERDADE (PASSO A PASSO SUPER SIMPLES)
+------------------------------------------------------------------
+Depois de cada cadastro abaixo, você vai receber um "token" (uma senha
+grande tipo um código). Você cola esse código num arquivo chamado
+".env.local" que fica na pasta principal do projeto (se não existir,
+crie um arquivo de texto com esse nome exato). Depois reinicie o site
+(feche e rode "npm run dev" de novo). É só isso, o resto é automático.
+
+  a) TIKTOK SHOP
+     1. Entre em https://partner.tiktokshop.com
+     2. Crie uma conta de desenvolvedor e cadastre um "app"
+     3. Vincule sua loja do TikTok Shop a esse app (autorização OAuth)
+     4. Copie o "Access Token" gerado
+     5. No arquivo .env.local, escreva:
+        TIKTOK_SHOP_ACCESS_TOKEN=cole_o_token_aqui
+
+  b) SHOPEE
+     1. Entre em https://open.shopee.com
+     2. Cadastre um app na "Open Platform" da Shopee
+     3. Vincule sua loja (autorização da conta vendedora)
+     4. Copie a "Partner Key" e o "Shop ID"
+     5. No .env.local:
+        SHOPEE_PARTNER_KEY=cole_aqui
+        SHOPEE_SHOP_ID=cole_aqui
+
+  c) MERCADO LIVRE
+     1. Entre em https://developers.mercadolivre.com.br
+     2. Crie uma aplicação e faça login com sua conta de vendedor
+     3. Copie o "Access Token" (OAuth)
+     4. No .env.local:
+        MERCADO_LIVRE_ACCESS_TOKEN=cole_aqui
+
+IMPORTANTE: nenhuma dessas 3 tem um jeito de puxar dado real "de
+graça e sem cadastro" — todas exigem que você (o dono da loja) libere
+o acesso. Isso é assim para PROTEGER os vendedores, não é uma
+limitação do seu painel.
+
+
+7) O QUE O PAINEL MOSTRA (TOUR RÁPIDO PELA TELA)
+------------------------------------------------------------------
+De cima pra baixo, você vai ver:
+
+  1. Filtros (hora/dia/semana/mês, plataforma, categoria) + botão de
+     atualizar e hora da última atualização.
+  2. Conexões com APIs externas (o que é real x o que é estimativa).
+  3. 4 números grandes (KPIs): volume de vendas, volume de conteúdo
+     pesquisado, categoria em destaque agora, melhor horário do dia.
+  4. Gráfico de linha: vendas x conteúdo pesquisado ao longo do tempo.
+  5. Gráfico de pizza: quanto cada plataforma (TikTok/Shopee/ML)
+     representa do total.
+  6. Ranking de categorias (barra): quais categorias estão na frente.
+  7. "O que produzir agora": lista de ideias de vídeo/post prontas.
+  8. Mapa de calor (heatmap): a "grade" com todos os dias x todas as
+     horas, mostrando visualmente quando vender/postar mais.
+  9. Tendências reais do Brasil agora: lista ao vivo do Google Trends.
+ 10. Tabela de palavras-chave em alta (o que as pessoas estão
+     procurando, formato de vídeo sugerido pra cada uma).
+ 11. "O que vender agora": lista de produtos/categoria sugeridos, com
+     faixa de preço e a melhor janela de tempo pra vender.
+
+
+8) QUE TIPOS DE DADOS DE TERCEIROS ESTÃO CONECTADOS, EXATAMENTE
+------------------------------------------------------------------
+Resumo técnico beeem direto:
+
+  • Google Trends (trends.google.com/trending/rss) — REAL, AO VIVO.
+    Tipo de dado: lista dos termos mais buscados no Google no Brasil
+    nas últimas 24-48h, com um número aproximado de buscas e as
+    notícias relacionadas a cada termo. Não usa login nem chave.
+
+  • TikTok Shop Partner API — NÃO conectado (precisa do SEU login).
+    Tipo de dado que ela FORNECE quando conectado: vendas, pedidos e
+    métricas de produtos da SUA loja no TikTok Shop.
+
+  • Shopee Open Platform — NÃO conectado (precisa do SEU login).
+    Tipo de dado que ela FORNECE quando conectado: desempenho da loja,
+    itens mais vendidos, visitas por produto da SUA loja na Shopee.
+
+  • Mercado Livre API — NÃO conectado (precisa do SEU login).
+    Tipo de dado que ela FORNECE quando conectado: vendas, visitas e
+    perguntas dos produtos da SUA conta vendedora no Mercado Livre.
+    (Aviso: o Mercado Livre bloqueou, em 2023, a busca pública que
+    antes existia sem login — hoje só dá pra puxar dado com login.)
+
+
+9) O QUE VOCÊ PODE MUDAR/PERSONALIZAR FACILMENTE
+------------------------------------------------------------------
+  • Categorias de produto: arquivo
+    src/lib/constants.ts -> lista "CATEGORIES"
+  • Palavras-chave de cada categoria (usadas nas sugestões de
+    conteúdo): arquivo
+    src/lib/connectors/trends.ts -> objeto "KEYWORD_POOL"
+  • Cores e visual do site: arquivo
+    src/app/globals.css
+  • Textos da tela principal: arquivo
+    src/app/page.tsx
+
+
+10) PERGUNTAS QUE VOCÊ PODE TER
+------------------------------------------------------------------
+"Os números de venda que aparecem agora são mentira?"
+  Não são mentira, são uma ESTIMATIVA calculada com uma fórmula fixa
+  (não é sorteio/aleatório). Mas eles não são "a venda real da sua
+  loja" até você conectar sua conta em cada plataforma (item 6).
+
+"Preciso saber programar pra conectar as APIs?"
+  Não. Só precisa criar as contas de desenvolvedor nos 3 sites do
+  item 6, copiar o código (token) que cada um te dar, e colar no
+  arquivo .env.local. Depois é só reiniciar o site.
+
+"E se eu não conectar nada, o painel ainda serve pra alguma coisa?"
+  Serve! O Google Trends (real) + o índice de popularidade por
+  categoria + o horário do dia já dão uma direção muito boa de "o que
+  está bombando" e "quando postar/vender". É só saber que os números
+  de venda específicos ainda são estimativa até você conectar sua
+  conta.
+
+"O painel atualiza sozinho?"
+  Sim, ele recarrega os dados automaticamente a cada 1 minuto. Mas se
+  quiser forçar na hora, é só clicar em "Atualizar agora".
+
+
+====================================================================
+Qualquer dúvida, releia este arquivo — ele foi escrito pra ser 100%
+claro, sem economês. Bom trabalho e boas vendas!
+====================================================================

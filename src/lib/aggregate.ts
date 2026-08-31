@@ -1,4 +1,5 @@
 import { CATEGORIES, PLATFORMS, dayOfWeekMultiplier, hourMultiplier } from "./constants";
+import { fetchRealGoogleNewsBR } from "./connectors/googleNewsRss";
 import { marketplaceConnectors } from "./connectors/marketplaces";
 import { fetchTrendsData } from "./connectors/trends";
 import type {
@@ -74,7 +75,7 @@ function buildHeatmap(): HeatmapCell[] {
   return cells;
 }
 
-function buildDataSources(googleTrendsLive: boolean): DataSourceInfo[] {
+function buildDataSources(googleTrendsLive: boolean, googleNewsLive: boolean): DataSourceInfo[] {
   return [
     {
       id: "google-trends",
@@ -83,6 +84,54 @@ function buildDataSources(googleTrendsLive: boolean): DataSourceInfo[] {
       description: "Tendências de busca reais no Brasil agora, direto do feed público do Google. Não precisa de chave.",
       setupUrl: "https://trends.google.com/trending?geo=BR",
       envVar: "— (sem configuração necessária)",
+    },
+    {
+      id: "google-news",
+      label: "Google News (RSS oficial)",
+      status: googleNewsLive ? "ao_vivo" : "indisponivel",
+      description: "Manchetes e assuntos em circulação no Brasil, úteis para encontrar ganchos de conteúdo no momento certo.",
+      setupUrl: "https://news.google.com/home?hl=pt-BR&gl=BR&ceid=BR:pt-419",
+      envVar: "— (sem configuração necessária)",
+    },
+    {
+      id: "x-twitter",
+      label: "X / Twitter API v2",
+      status: process.env.X_BEARER_TOKEN ? "ao_vivo" : "aguardando_credenciais",
+      description: "Posts, hashtags e tópicos públicos em alta pelo acesso oficial da API do X. Exige plano e token do X Developer.",
+      setupUrl: "https://developer.x.com/en/portal/dashboard",
+      envVar: "X_BEARER_TOKEN",
+    },
+    {
+      id: "youtube",
+      label: "YouTube Data API",
+      status: process.env.YOUTUBE_API_KEY ? "ao_vivo" : "aguardando_credenciais",
+      description: "Vídeos populares, palavras-chave e sinais de conteúdo com alta audiência no YouTube Brasil.",
+      setupUrl: "https://console.cloud.google.com/apis/library/youtube.googleapis.com",
+      envVar: "YOUTUBE_API_KEY",
+    },
+    {
+      id: "pinterest",
+      label: "Pinterest API",
+      status: process.env.PINTEREST_ACCESS_TOKEN ? "ao_vivo" : "aguardando_credenciais",
+      description: "Tendências visuais, Pins e desempenho da sua conta no Pinterest. Ótimo para moda, decoração e beleza.",
+      setupUrl: "https://developers.pinterest.com",
+      envVar: "PINTEREST_ACCESS_TOKEN",
+    },
+    {
+      id: "google-analytics",
+      label: "Google Analytics 4",
+      status: process.env.GOOGLE_ANALYTICS_PROPERTY_ID ? "ao_vivo" : "aguardando_credenciais",
+      description: "Páginas vistas, origem do tráfego e conversões do seu próprio site ou loja, via GA4 Data API.",
+      setupUrl: "https://console.cloud.google.com/apis/library/analyticsdata.googleapis.com",
+      envVar: "GOOGLE_ANALYTICS_PROPERTY_ID",
+    },
+    {
+      id: "search-console",
+      label: "Google Search Console API",
+      status: process.env.GOOGLE_SEARCH_CONSOLE_SITE_URL ? "ao_vivo" : "aguardando_credenciais",
+      description: "Consultas reais que levam pessoas ao seu site, impressões e cliques no Google Search.",
+      setupUrl: "https://search.google.com/search-console",
+      envVar: "GOOGLE_SEARCH_CONSOLE_SITE_URL",
     },
     {
       id: "tiktok-shop",
@@ -121,9 +170,10 @@ export async function buildDashboardSummary(filters: {
       ? marketplaceConnectors
       : marketplaceConnectors.filter((c) => c.platform === filters.platform);
 
-  const [samplesByConnector, trendsResult] = await Promise.all([
+  const [samplesByConnector, trendsResult, googleNews] = await Promise.all([
     Promise.all(connectors.map((c) => c.fetchVolume())),
     fetchTrendsData(),
+    fetchRealGoogleNewsBR(),
   ]);
 
   const samples = samplesByConnector.flat();
@@ -224,8 +274,9 @@ export async function buildDashboardSummary(filters: {
       bestCategoryNow: categoryStats[0]?.category.name ?? "-",
       bestHourLabel: `${String(bestHourIdx).padStart(2, "0")}h - ${String((bestHourIdx + 1) % 24).padStart(2, "0")}h`,
     },
-    dataSources: buildDataSources(googleTrendsLive),
+    dataSources: buildDataSources(googleTrendsLive, googleNews.live),
     realTrendsNow,
+    newsNow: googleNews.items,
     timeline,
     categoryStats,
     platformShares,

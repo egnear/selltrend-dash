@@ -169,6 +169,35 @@ Resumo técnico beeem direto:
     nas últimas 24-48h, com um número aproximado de buscas e as
     notícias relacionadas a cada termo. Não usa login nem chave.
 
+  • Google News (news.google.com/rss) — REAL, AO VIVO.
+    Tipo de dado: manchetes e assuntos que estão circulando no Brasil.
+    O painel usa isso para sugerir ganchos de vídeo atuais. Não usa
+    login nem chave. Use apenas notícias realmente relacionadas ao
+    seu produto e nunca invente uma relação que não exista.
+
+  • X / Twitter API v2 — PREPARADO, MAS EXIGE O SEU TOKEN OFICIAL.
+    Tipo de dado disponível quando conectado: posts públicos, hashtags
+    e tópicos pesquisados no X. O X cobra/limita o acesso por plano.
+    A variável é X_BEARER_TOKEN.
+
+  • YouTube Data API — PREPARADO, MAS EXIGE A SUA CHAVE OFICIAL.
+    Tipo de dado disponível quando conectado: vídeos populares no
+    Brasil, títulos, canais e categorias. A variável é
+    YOUTUBE_API_KEY.
+
+  • Pinterest API — PREPARADO, MAS EXIGE O SEU TOKEN OFICIAL.
+    Tipo de dado disponível quando conectado: desempenho da sua conta,
+    Pins e tendências visuais. É particularmente útil para moda,
+    decoração, beleza e produtos de casa. A variável é
+    PINTEREST_ACCESS_TOKEN.
+
+  • Google Analytics 4 e Google Search Console — PREPARADOS, MAS
+    EXIGEM AUTORIZAÇÃO DA SUA CONTA GOOGLE.
+    Tipo de dado disponível quando conectados: páginas mais visitadas,
+    origem do tráfego, conversões e as pesquisas reais que levam
+    pessoas até sua loja/site. As variáveis são
+    GOOGLE_ANALYTICS_PROPERTY_ID e GOOGLE_SEARCH_CONSOLE_SITE_URL.
+
   • TikTok Shop Partner API — NÃO conectado (precisa do SEU login).
     Tipo de dado que ela FORNECE quando conectado: vendas, pedidos e
     métricas de produtos da SUA loja no TikTok Shop.

@@ -11,6 +11,7 @@ import { TrendingKeywordsTable } from "@/components/TrendingKeywordsTable";
 import { ProductRecommendations } from "@/components/ProductRecommendations";
 import { ContentPlan } from "@/components/ContentPlan";
 import { ConnectionsPanel } from "@/components/ConnectionsPanel";
+import { LiveNewsWidget } from "@/components/LiveNewsWidget";
 import { RealTrendsWidget } from "@/components/RealTrendsWidget";
 import type { DashboardSummary, Period, Platform } from "@/lib/types";
 
@@ -113,6 +114,8 @@ export default function Home() {
           <HourHeatmap data={summary.heatmap} />
 
           <RealTrendsWidget data={summary.realTrendsNow} />
+
+          <LiveNewsWidget data={summary.newsNow} />
 
           <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <TrendingKeywordsTable data={summary.trendingKeywords} />

@@ -56,6 +56,13 @@ export interface RealTrendItem {
   matchedCategory: CategoryDefinition | null;
 }
 
+export interface NewsItem {
+  title: string;
+  source: string | null;
+  url: string | null;
+  publishedAt: string | null;
+}
+
 export type DataSourceStatus = "ao_vivo" | "aguardando_credenciais" | "indisponivel";
 
 export interface DataSourceInfo {
@@ -101,6 +108,7 @@ export interface DashboardSummary {
   };
   dataSources: DataSourceInfo[];
   realTrendsNow: RealTrendItem[];
+  newsNow: NewsItem[];
   timeline: TimePoint[];
   categoryStats: CategoryStat[];
   platformShares: PlatformShare[];

@@ -10,6 +10,7 @@ import { HourHeatmap } from "@/components/HourHeatmap";
 import { TrendingKeywordsTable } from "@/components/TrendingKeywordsTable";
 import { ProductRecommendations } from "@/components/ProductRecommendations";
 import { ContentPlan } from "@/components/ContentPlan";
+import { DataQualityBanner } from "@/components/DataQualityBanner";
 import { LiveNewsWidget } from "@/components/LiveNewsWidget";
 import { RealTrendsWidget } from "@/components/RealTrendsWidget";
 import type { DashboardSummary, Period, Platform } from "@/lib/types";
@@ -21,16 +22,20 @@ export default function Home() {
   const [summary, setSummary] = useState<DashboardSummary | null>(null);
   const [loading, setLoading] = useState(true);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
-  const [tomatoBurst, setTomatoBurst] = useState(0);
+  const [loadError, setLoadError] = useState<string | null>(null);
 
   const load = useCallback(async () => {
     setLoading(true);
+    setLoadError(null);
     const params = new URLSearchParams({ platform, period, category });
     try {
       const res = await fetch(`/api/summary?${params.toString()}`, { cache: "no-store" });
+      if (!res.ok) throw new Error("Não foi possível atualizar os dados agora.");
       const data = await res.json();
       setSummary(data);
       setLastUpdated(new Date());
+    } catch (error) {
+      setLoadError(error instanceof Error ? error.message : "Não foi possível atualizar os dados agora.");
     } finally {
       setLoading(false);
     }
@@ -42,27 +47,13 @@ export default function Home() {
     return () => clearInterval(interval);
   }, [load]);
 
-  useEffect(() => {
-    if (tomatoBurst === 0) return;
-    const timer = window.setTimeout(() => setTomatoBurst(0), 1200);
-    return () => window.clearTimeout(timer);
-  }, [tomatoBurst]);
-
   return (
     <main className="flex-1 px-4 md:px-8 py-6 max-w-[1400px] w-full mx-auto flex flex-col gap-6">
       <header className="automatos-header flex flex-wrap items-start justify-between gap-4 rounded-2xl p-5 md:p-6">
         <div className="flex items-center gap-4">
           <div className="tomato-mark">
             <span className="tomato-leaf" aria-hidden="true" />
-            <button
-              type="button"
-              className="tomato-gear tomato-gear-a tomato-gear-button"
-              onClick={() => setTomatoBurst((current) => current + 1)}
-              aria-label="Lançar tomatinhos"
-              title="Lançar tomatinhos"
-            >
-              ⚙
-            </button>
+            <span className="tomato-gear tomato-gear-a" aria-hidden="true">⚙</span>
             <span className="tomato-gear tomato-gear-b" aria-hidden="true">⚙</span>
           </div>
           <div className="flex flex-col gap-1">
@@ -73,15 +64,6 @@ export default function Home() {
             </p>
           </div>
         </div>
-        {tomatoBurst ? (
-          <div className="tomato-burst" key={tomatoBurst} aria-hidden="true">
-            {Array.from({ length: 10 }, (_, index) => (
-              <span key={index} className="tomato-particle" style={{ "--particle": index } as React.CSSProperties}>
-                🍅
-              </span>
-            ))}
-          </div>
-        ) : null}
       </header>
 
       <FiltersBar
@@ -100,6 +82,8 @@ export default function Home() {
 
       {summary ? (
         <>
+          <DataQualityBanner quality={summary.dataQuality} />
+
           <section className="dashboard-reveal grid grid-cols-2 md:grid-cols-4 gap-4">
             <KpiCard
               label="Volume de vendas (índice)"
@@ -157,8 +141,14 @@ export default function Home() {
             ver as fontes ativas e trocar APIs.
           </footer>
         </>
+      ) : loadError ? (
+        <div className="glass-card rounded-2xl py-16 px-6 text-center">
+          <p className="font-semibold text-slate-800">Não foi possível carregar o dashboard.</p>
+          <p className="mt-1 text-sm text-slate-500">{loadError}</p>
+          <button onClick={load} className="mt-5 rounded-lg bg-orange-500 px-4 py-2 text-sm font-semibold text-white hover:bg-orange-600 transition-colors">Tentar novamente</button>
+        </div>
       ) : (
-        <div className="flex items-center justify-center py-24 text-slate-400">Carregando dados do mercado…</div>
+        <div className="flex items-center justify-center py-24 text-slate-500">Carregando dados do mercado…</div>
       )}
     </main>
   );

@@ -19,6 +19,7 @@ export interface RawCategorySample {
 export interface MarketplaceConnector {
   platform: Platform;
   isLive(): boolean;
+  hasCredentials(): boolean;
   fetchVolume(): Promise<RawCategorySample[]>;
 }
 
@@ -48,13 +49,12 @@ function estimateForPlatform(platform: Platform): RawCategorySample[] {
 export const tiktokShopConnector: MarketplaceConnector = {
   platform: "tiktok_shop",
   isLive() {
+    return false;
+  },
+  hasCredentials() {
     return Boolean(process.env.TIKTOK_SHOP_ACCESS_TOKEN);
   },
   async fetchVolume() {
-    if (this.isLive()) {
-      // TODO: substituir pela chamada real ao TikTok Shop Partner API quando as
-      // credenciais estiverem configuradas em produção.
-    }
     return estimateForPlatform("tiktok_shop");
   },
 };
@@ -67,12 +67,12 @@ export const tiktokShopConnector: MarketplaceConnector = {
 export const shopeeConnector: MarketplaceConnector = {
   platform: "shopee",
   isLive() {
+    return false;
+  },
+  hasCredentials() {
     return Boolean(process.env.SHOPEE_PARTNER_KEY);
   },
   async fetchVolume() {
-    if (this.isLive()) {
-      // TODO: chamada real à Shopee Open API (v2) quando SHOPEE_PARTNER_KEY existir.
-    }
     return estimateForPlatform("shopee");
   },
 };
@@ -86,13 +86,12 @@ export const shopeeConnector: MarketplaceConnector = {
 export const mercadoLivreConnector: MarketplaceConnector = {
   platform: "mercado_livre",
   isLive() {
+    return false;
+  },
+  hasCredentials() {
     return Boolean(process.env.MERCADO_LIVRE_ACCESS_TOKEN);
   },
   async fetchVolume() {
-    if (this.isLive()) {
-      // TODO: chamada real à API do Mercado Livre (https://api.mercadolibre.com) quando
-      // MERCADO_LIVRE_ACCESS_TOKEN existir.
-    }
     return estimateForPlatform("mercado_livre");
   },
 };

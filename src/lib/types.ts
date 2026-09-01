@@ -74,6 +74,11 @@ export interface DataSourceInfo {
   envVar: string;
 }
 
+export interface DataQuality {
+  liveSources: string[];
+  estimatedAreas: string[];
+}
+
 export interface ProductRecommendation {
   product: string;
   category: CategoryDefinition;
@@ -107,6 +112,7 @@ export interface DashboardSummary {
     bestHourLabel: string;
   };
   dataSources: DataSourceInfo[];
+  dataQuality: DataQuality;
   realTrendsNow: RealTrendItem[];
   newsNow: NewsItem[];
   timeline: TimePoint[];

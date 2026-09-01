@@ -160,6 +160,13 @@ function buildDataSources(googleTrendsLive: boolean, googleNewsLive: boolean): D
   ];
 }
 
+function buildDataQuality(dataSources: DataSourceInfo[]): { liveSources: string[]; estimatedAreas: string[] } {
+  return {
+    liveSources: dataSources.filter((source) => source.status === "ao_vivo").map((source) => source.label),
+    estimatedAreas: ["Volume de vendas por marketplace", "Ranking e participação por plataforma", "Crescimento das palavras do catálogo"],
+  };
+}
+
 export async function buildDashboardSummary(filters: {
   platform: Platform | "all";
   period: Period;
@@ -264,6 +271,8 @@ export async function buildDashboardSummary(filters: {
       ? Math.round((categoryStats.reduce((sum, c) => sum + c.growthPct, 0) / categoryStats.length) * 10) / 10
       : 0;
 
+  const dataSources = buildDataSources(googleTrendsLive, googleNews.live);
+
   return {
     generatedAt: now.toISOString(),
     filters,
@@ -274,7 +283,8 @@ export async function buildDashboardSummary(filters: {
       bestCategoryNow: categoryStats[0]?.category.name ?? "-",
       bestHourLabel: `${String(bestHourIdx).padStart(2, "0")}h - ${String((bestHourIdx + 1) % 24).padStart(2, "0")}h`,
     },
-    dataSources: buildDataSources(googleTrendsLive, googleNews.live),
+    dataSources,
+    dataQuality: buildDataQuality(dataSources),
     realTrendsNow,
     newsNow: googleNews.items,
     timeline,

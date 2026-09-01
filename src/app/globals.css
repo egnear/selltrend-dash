@@ -79,6 +79,32 @@ body::after {
 .glass-card [class*="bg-orange"].text-white,
 .glass-card [class*="bg-rose"].text-white { color: #fff; }
 
+.data-quality-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid rgba(82, 142, 111, 0.2);
+  border-radius: 12px;
+  color: #426154;
+  background: linear-gradient(100deg, rgba(228, 246, 236, 0.86), rgba(250, 246, 234, 0.86));
+  box-shadow: 0 8px 20px rgba(73, 119, 92, 0.06);
+}
+
+.data-quality-indicator {
+  width: 31px;
+  height: 31px;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #fff;
+  background: #559b70;
+  box-shadow: 0 0 0 4px rgba(85, 155, 112, 0.12);
+  font-size: 0.82rem;
+  font-weight: 750;
+}
+
 .app-nav {
   width: min(1400px, calc(100% - 2rem));
   margin: 1rem auto 0;
@@ -232,12 +258,6 @@ body::after {
 
 .tomato-gear-a { font-size: 22px; left: 12px; top: 22px; }
 .tomato-gear-b { font-size: 16px; right: 11px; bottom: 9px; animation-direction: reverse; animation-duration: 6s; }
-.tomato-gear-button { border: 0; padding: 0; background: transparent; cursor: pointer; }
-.tomato-gear-button:hover { color: #fff; filter: brightness(1.1); }
-.tomato-gear-button:focus-visible { outline: 2px solid #fff1dc; outline-offset: 2px; border-radius: 3px; }
-
-.tomato-burst { position: absolute; top: 44px; left: 39px; width: 1px; height: 1px; pointer-events: none; z-index: 2; }
-.tomato-particle { --angle: calc(var(--particle) * 36deg); --distance: calc(50px + (var(--particle) % 3) * 20px); position: absolute; display: block; font-size: 19px; line-height: 1; animation: tomato-burst 1100ms cubic-bezier(0.18, 0.8, 0.35, 1) both; }
 
 @keyframes gear-spin { to { transform: rotate(360deg); } }
 @keyframes gear-drift { to { transform: rotate(348deg); } }
@@ -245,7 +265,6 @@ body::after {
 @keyframes dashboard-reveal { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes background-flow { from { background-position: 0% 38%; transform: translate3d(-2%, -1%, 0) rotate(-5deg); } to { background-position: 100% 62%; transform: translate3d(2%, 1%, 0) rotate(-3deg); } }
 @keyframes background-weave { to { transform: translate3d(5%, -3%, 0) rotate(-4deg); } }
-@keyframes tomato-burst { 0% { opacity: 0; transform: translate(-2px, 0) scale(0.55) rotate(0deg); } 12% { opacity: 1; } 78% { opacity: 1; } 100% { opacity: 0; transform: translate(calc(cos(var(--angle)) * var(--distance)), calc(sin(var(--angle)) * var(--distance) + 55px)) scale(0.75) rotate(260deg); } }
 
 html.dark {
   --background: #191313;
@@ -290,6 +309,7 @@ html.dark {
 .dark .theme-toggle-track { background: #3b2a29; box-shadow: inset 0 0 0 1px rgba(255, 223, 204, 0.1); }
 .dark .theme-toggle-thumb { transform: translateX(14px); color: #aee2ce; background: #263934; }
 .dark .theme-toggle:hover .theme-toggle-thumb { transform: translateX(14px) scale(1.08); }
+.dark .data-quality-banner { color: #d9eadf; border-color: rgba(113, 183, 139, 0.2); background: linear-gradient(100deg, rgba(39, 77, 57, 0.62), rgba(65, 54, 34, 0.5)); }
 
 .integrations-page > div > div .text-white { color: #352720; }
 .integrations-page > div > div .text-slate-400 { color: #745c50; }

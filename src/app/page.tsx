@@ -21,6 +21,7 @@ export default function Home() {
   const [summary, setSummary] = useState<DashboardSummary | null>(null);
   const [loading, setLoading] = useState(true);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
+  const [tomatoBurst, setTomatoBurst] = useState(0);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -41,14 +42,28 @@ export default function Home() {
     return () => clearInterval(interval);
   }, [load]);
 
+  useEffect(() => {
+    if (tomatoBurst === 0) return;
+    const timer = window.setTimeout(() => setTomatoBurst(0), 1200);
+    return () => window.clearTimeout(timer);
+  }, [tomatoBurst]);
+
   return (
     <main className="flex-1 px-4 md:px-8 py-6 max-w-[1400px] w-full mx-auto flex flex-col gap-6">
       <header className="automatos-header flex flex-wrap items-start justify-between gap-4 rounded-2xl p-5 md:p-6">
         <div className="flex items-center gap-4">
-          <div className="tomato-mark" aria-hidden="true">
-            <span className="tomato-leaf" />
-            <span className="tomato-gear tomato-gear-a">⚙</span>
-            <span className="tomato-gear tomato-gear-b">⚙</span>
+          <div className="tomato-mark">
+            <span className="tomato-leaf" aria-hidden="true" />
+            <button
+              type="button"
+              className="tomato-gear tomato-gear-a tomato-gear-button"
+              onClick={() => setTomatoBurst((current) => current + 1)}
+              aria-label="Lançar tomatinhos"
+              title="Lançar tomatinhos"
+            >
+              ⚙
+            </button>
+            <span className="tomato-gear tomato-gear-b" aria-hidden="true">⚙</span>
           </div>
           <div className="flex flex-col gap-1">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-orange-200">Inteligência de comércio</p>
@@ -58,6 +73,15 @@ export default function Home() {
             </p>
           </div>
         </div>
+        {tomatoBurst ? (
+          <div className="tomato-burst" key={tomatoBurst} aria-hidden="true">
+            {Array.from({ length: 10 }, (_, index) => (
+              <span key={index} className="tomato-particle" style={{ "--particle": index } as React.CSSProperties}>
+                🍅
+              </span>
+            ))}
+          </div>
+        ) : null}
       </header>
 
       <FiltersBar

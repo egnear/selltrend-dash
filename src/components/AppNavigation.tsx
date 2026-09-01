@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const links = [
   { href: "/", label: "Painel" },
@@ -17,21 +18,24 @@ export function AppNavigation() {
         <span className="app-nav-tomato" aria-hidden="true">●</span>
         <span>Automatos</span>
       </Link>
-      <div className="page-switch" role="tablist" aria-label="Páginas do Automatos">
-        {links.map((link) => {
-          const active = pathname === link.href;
-          return (
-            <Link
-              key={link.href}
-              href={link.href}
-              role="tab"
-              aria-selected={active}
-              className={`page-switch-link ${active ? "page-switch-link-active" : ""}`}
-            >
-              {link.label}
-            </Link>
-          );
-        })}
+      <div className="app-nav-actions">
+        <div className="page-switch" role="tablist" aria-label="Páginas do Automatos">
+          {links.map((link) => {
+            const active = pathname === link.href;
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                role="tab"
+                aria-selected={active}
+                className={`page-switch-link ${active ? "page-switch-link-active" : ""}`}
+              >
+                {link.label}
+              </Link>
+            );
+          })}
+        </div>
+        <ThemeToggle />
       </div>
     </nav>
   );

@@ -121,7 +121,7 @@ export default function ConexoesPage() {
   }, []);
 
   return (
-    <main className="flex-1 px-4 md:px-8 py-6 max-w-[1400px] w-full mx-auto">
+    <main className="integrations-page flex-1 px-4 md:px-8 py-6 max-w-[1400px] w-full mx-auto">
       <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
         <div>
           <p className="text-xs font-semibold uppercase tracking-wide text-fuchsia-300">Integrações</p>

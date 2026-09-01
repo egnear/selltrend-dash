@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #120809;
-  --foreground: #eef1f8;
+  --background: #fff8f2;
+  --foreground: #2c2421;
 }
 
 @theme inline {
@@ -14,9 +14,9 @@
 
 body {
   background:
-    radial-gradient(circle at 8% 0%, rgba(255, 100, 35, 0.22) 0%, transparent 28%),
-    radial-gradient(circle at 92% 15%, rgba(190, 40, 35, 0.18) 0%, transparent 24%),
-    #120809;
+    radial-gradient(circle at 0% 0%, rgba(255, 193, 141, 0.32) 0%, transparent 28%),
+    radial-gradient(circle at 100% 12%, rgba(174, 221, 204, 0.32) 0%, transparent 26%),
+    linear-gradient(135deg, #fff8f2 0%, #fffaf4 48%, #f5fbf7 100%);
   color: var(--foreground);
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
   min-height: 100vh;
@@ -27,7 +27,7 @@ body {
   height: 8px;
 }
 ::-webkit-scrollbar-thumb {
-  background: #2a2d45;
+  background: #d7aaa0;
   border-radius: 8px;
 }
 ::-webkit-scrollbar-track {
@@ -35,16 +35,87 @@ body {
 }
 
 .glass-card {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.065), rgba(255, 255, 255, 0.02));
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(155deg, rgba(255, 255, 255, 0.86), rgba(255, 251, 246, 0.72));
+  border: 1px solid rgba(139, 85, 71, 0.12);
   backdrop-filter: blur(10px);
+  box-shadow: 0 12px 28px rgba(116, 77, 59, 0.07);
 }
+
+/* Existing data widgets share dark-theme utilities; keep their information readable on the new light surface. */
+.glass-card .text-white { color: #352720; }
+.glass-card .text-slate-100,
+.glass-card .text-slate-200 { color: #44342d; }
+.glass-card .text-slate-300 { color: #5c473d; }
+.glass-card .text-slate-400 { color: #745c50; }
+.glass-card .text-slate-500 { color: #8a6d60; }
+.glass-card [class*="border-white"] { border-color: rgba(121, 80, 62, 0.13); }
+.glass-card [class*="bg-white/"] { background-color: rgba(255, 255, 255, 0.58); }
+.glass-card select { color: #44342d; background-color: rgba(255, 255, 255, 0.78); }
+.glass-card select option { color: #44342d; background: #fffaf5; }
+.glass-card [class*="bg-fuchsia"].text-white,
+.glass-card [class*="bg-orange"].text-white,
+.glass-card [class*="bg-rose"].text-white { color: #fff; }
+
+.app-nav {
+  width: min(1400px, calc(100% - 2rem));
+  margin: 1rem auto 0;
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.45rem 0.55rem 0.45rem 1rem;
+  border: 1px solid rgba(139, 85, 71, 0.12);
+  border-radius: 14px;
+  background: rgba(255, 253, 249, 0.74);
+  box-shadow: 0 8px 24px rgba(116, 77, 59, 0.06);
+  backdrop-filter: blur(12px);
+}
+
+.app-nav-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: #4b3028;
+  font-weight: 750;
+  text-decoration: none;
+}
+
+.app-nav-tomato {
+  color: #e7543e;
+  font-size: 1.45rem;
+  line-height: 0;
+  text-shadow: 0 -5px 0 #6ea84d;
+  animation: tomato-pulse 4s ease-in-out infinite;
+}
+
+.page-switch {
+  display: flex;
+  gap: 0.15rem;
+  padding: 0.2rem;
+  border-radius: 10px;
+  background: #f4e8df;
+}
+
+.page-switch-link {
+  color: #7a5b50;
+  border-radius: 8px;
+  padding: 0.42rem 0.8rem;
+  font-size: 0.84rem;
+  font-weight: 650;
+  text-decoration: none;
+  transition: color 180ms ease, background 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+}
+
+.page-switch-link:hover { color: #492f27; transform: translateY(-1px); }
+.page-switch-link-active { color: #fff; background: linear-gradient(135deg, #dd5a44, #ed7a49); box-shadow: 0 3px 8px rgba(194, 71, 53, 0.22); }
 
 .automatos-header {
   position: relative;
   overflow: hidden;
-  border: 1px solid rgba(255, 139, 72, 0.25);
-  background: linear-gradient(110deg, rgba(173, 34, 24, 0.42), rgba(86, 20, 19, 0.42) 48%, rgba(26, 13, 14, 0.6));
+  border: 1px solid rgba(221, 101, 73, 0.26);
+  background: linear-gradient(110deg, #d95a43 0%, #e77a4c 48%, #e8956a 100%);
+  box-shadow: 0 14px 32px rgba(181, 78, 54, 0.16);
 }
 
 .automatos-header::after {
@@ -52,7 +123,7 @@ body {
   position: absolute;
   right: -12px;
   bottom: -24px;
-  color: rgba(255, 192, 148, 0.11);
+  color: rgba(255, 239, 217, 0.2);
   font-size: 112px;
   letter-spacing: 8px;
   transform: rotate(-12deg);
@@ -69,6 +140,12 @@ body {
   box-shadow: inset -7px -8px 10px rgba(91, 13, 14, 0.35), 0 12px 24px rgba(255, 69, 40, 0.22);
   animation: tomato-pulse 4s ease-in-out infinite;
 }
+
+.dashboard-reveal {
+  animation: dashboard-reveal 540ms both cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.dashboard-reveal-delay-1 { animation-delay: 80ms; }
+.dashboard-reveal-delay-2 { animation-delay: 160ms; }
 
 .tomato-leaf {
   position: absolute;
@@ -94,7 +171,13 @@ body {
 @keyframes gear-spin { to { transform: rotate(360deg); } }
 @keyframes gear-drift { to { transform: rotate(348deg); } }
 @keyframes tomato-pulse { 50% { transform: translateY(-2px) scale(1.025); } }
+@keyframes dashboard-reveal { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }
+}
+
+@media (max-width: 640px) {
+  .app-nav { width: calc(100% - 1.5rem); margin-top: 0.75rem; padding-left: 0.8rem; }
+  .page-switch-link { padding-inline: 0.65rem; }
 }

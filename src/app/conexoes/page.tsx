@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import type { DataSourceInfo, DashboardSummary } from "@/lib/types";
 
@@ -131,9 +130,6 @@ export default function ConexoesPage() {
             Conecte somente contas que são suas. Seus tokens ficam protegidos nas variáveis da Vercel e nunca são digitados nesta tela.
           </p>
         </div>
-        <Link href="/" className="rounded-lg border border-white/15 px-3 py-2 text-sm font-medium text-slate-200 hover:bg-white/10 transition-colors">
-          ← Voltar ao dashboard
-        </Link>
       </div>
 
       <section className="glass-card rounded-2xl p-5 mb-6">

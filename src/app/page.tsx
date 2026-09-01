@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { FiltersBar } from "@/components/FiltersBar";
 import { KpiCard } from "@/components/KpiCard";
@@ -59,9 +58,6 @@ export default function Home() {
             </p>
           </div>
         </div>
-        <Link href="/conexoes" className="rounded-lg border border-orange-300/35 bg-orange-400/15 px-3 py-2 text-sm font-semibold text-orange-100 hover:bg-orange-400/25 transition-colors">
-          Gerenciar integrações →
-        </Link>
       </header>
 
       <FiltersBar
@@ -80,7 +76,7 @@ export default function Home() {
 
       {summary ? (
         <>
-          <section className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <section className="dashboard-reveal grid grid-cols-2 md:grid-cols-4 gap-4">
             <KpiCard
               label="Volume de vendas (índice)"
               value={summary.kpis.totalSalesVolume.toLocaleString("pt-BR")}
@@ -107,14 +103,14 @@ export default function Home() {
             />
           </section>
 
-          <section className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <section className="dashboard-reveal dashboard-reveal-delay-1 grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2">
               <VolumeChart data={summary.timeline} />
             </div>
             <PlatformShareChart data={summary.platformShares} />
           </section>
 
-          <section className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <section className="dashboard-reveal dashboard-reveal-delay-2 grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2">
               <CategoryBarChart data={summary.categoryStats} />
             </div>

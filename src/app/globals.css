@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #05060a;
+  --background: #120809;
   --foreground: #eef1f8;
 }
 
@@ -13,7 +13,10 @@
 }
 
 body {
-  background: radial-gradient(circle at 15% 0%, #14163a 0%, #05060a 45%, #05060a 100%);
+  background:
+    radial-gradient(circle at 8% 0%, rgba(255, 100, 35, 0.22) 0%, transparent 28%),
+    radial-gradient(circle at 92% 15%, rgba(190, 40, 35, 0.18) 0%, transparent 24%),
+    #120809;
   color: var(--foreground);
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
   min-height: 100vh;
@@ -32,7 +35,66 @@ body {
 }
 
 .glass-card {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.065), rgba(255, 255, 255, 0.02));
   border: 1px solid rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(10px);
+}
+
+.automatos-header {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 139, 72, 0.25);
+  background: linear-gradient(110deg, rgba(173, 34, 24, 0.42), rgba(86, 20, 19, 0.42) 48%, rgba(26, 13, 14, 0.6));
+}
+
+.automatos-header::after {
+  content: "⚙  ⚙  ⚙";
+  position: absolute;
+  right: -12px;
+  bottom: -24px;
+  color: rgba(255, 192, 148, 0.11);
+  font-size: 112px;
+  letter-spacing: 8px;
+  transform: rotate(-12deg);
+  animation: gear-drift 24s linear infinite;
+}
+
+.tomato-mark {
+  position: relative;
+  width: 64px;
+  height: 58px;
+  flex: 0 0 auto;
+  border-radius: 45% 45% 48% 48%;
+  background: radial-gradient(circle at 34% 25%, #ff9a76 0 7%, #ed4d2c 23%, #b72020 70%);
+  box-shadow: inset -7px -8px 10px rgba(91, 13, 14, 0.35), 0 12px 24px rgba(255, 69, 40, 0.22);
+  animation: tomato-pulse 4s ease-in-out infinite;
+}
+
+.tomato-leaf {
+  position: absolute;
+  width: 22px;
+  height: 15px;
+  left: 21px;
+  top: -7px;
+  background: #84bc39;
+  clip-path: polygon(50% 100%, 0 35%, 44% 44%, 50% 0, 56% 44%, 100% 35%);
+}
+
+.tomato-gear {
+  position: absolute;
+  color: #fff1dc;
+  line-height: 1;
+  text-shadow: 0 2px 4px rgba(92, 19, 14, 0.4);
+  animation: gear-spin 8s linear infinite;
+}
+
+.tomato-gear-a { font-size: 22px; left: 12px; top: 22px; }
+.tomato-gear-b { font-size: 16px; right: 11px; bottom: 9px; animation-direction: reverse; animation-duration: 6s; }
+
+@keyframes gear-spin { to { transform: rotate(360deg); } }
+@keyframes gear-drift { to { transform: rotate(348deg); } }
+@keyframes tomato-pulse { 50% { transform: translateY(-2px) scale(1.025); } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }
 }

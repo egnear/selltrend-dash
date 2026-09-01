@@ -11,7 +11,6 @@ import { HourHeatmap } from "@/components/HourHeatmap";
 import { TrendingKeywordsTable } from "@/components/TrendingKeywordsTable";
 import { ProductRecommendations } from "@/components/ProductRecommendations";
 import { ContentPlan } from "@/components/ContentPlan";
-import { ConnectionsPanel } from "@/components/ConnectionsPanel";
 import { LiveNewsWidget } from "@/components/LiveNewsWidget";
 import { RealTrendsWidget } from "@/components/RealTrendsWidget";
 import type { DashboardSummary, Period, Platform } from "@/lib/types";
@@ -45,16 +44,23 @@ export default function Home() {
 
   return (
     <main className="flex-1 px-4 md:px-8 py-6 max-w-[1400px] w-full mx-auto flex flex-col gap-6">
-      <header className="flex flex-wrap items-start justify-between gap-4">
-        <div className="flex flex-col gap-1">
-          <h1 className="text-2xl md:text-3xl font-bold text-white">🚀 SellTrend Dash</h1>
-          <p className="text-sm text-slate-400">
-            Volume de compras + conteúdo pesquisado no TikTok Shop, Shopee e Mercado Livre, com recomendações de venda e
-            produção de conteúdo em tempo real.
-          </p>
+      <header className="automatos-header flex flex-wrap items-start justify-between gap-4 rounded-2xl p-5 md:p-6">
+        <div className="flex items-center gap-4">
+          <div className="tomato-mark" aria-hidden="true">
+            <span className="tomato-leaf" />
+            <span className="tomato-gear tomato-gear-a">⚙</span>
+            <span className="tomato-gear tomato-gear-b">⚙</span>
+          </div>
+          <div className="flex flex-col gap-1">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-orange-200">Inteligência de comércio</p>
+            <h1 className="text-3xl md:text-4xl font-bold text-white">Automatos</h1>
+            <p className="text-sm text-slate-300">
+              Dados, tendências e decisões práticas para vender e criar conteúdo no momento certo.
+            </p>
+          </div>
         </div>
-        <Link href="/conexoes" className="rounded-lg border border-fuchsia-400/40 bg-fuchsia-500/10 px-3 py-2 text-sm font-semibold text-fuchsia-200 hover:bg-fuchsia-500/20 transition-colors">
-          Conectar contas →
+        <Link href="/conexoes" className="rounded-lg border border-orange-300/35 bg-orange-400/15 px-3 py-2 text-sm font-semibold text-orange-100 hover:bg-orange-400/25 transition-colors">
+          Gerenciar integrações →
         </Link>
       </header>
 
@@ -74,8 +80,6 @@ export default function Home() {
 
       {summary ? (
         <>
-          <ConnectionsPanel data={summary.dataSources} />
-
           <section className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <KpiCard
               label="Volume de vendas (índice)"
@@ -129,9 +133,8 @@ export default function Home() {
           </section>
 
           <footer className="text-xs text-slate-600 pb-6">
-            Gerado às {new Date(summary.generatedAt).toLocaleString("pt-BR")} · Veja em &quot;Conexões com APIs
-            externas&quot; acima quais dados são ao vivo e quais são estimativa. Leia o PROJETO-EXPLICADO.txt na raiz do
-            projeto para o guia completo.
+            Gerado às {new Date(summary.generatedAt).toLocaleString("pt-BR")} · Consulte “Gerenciar integrações” para
+            ver as fontes ativas e trocar APIs.
           </footer>
         </>
       ) : (
